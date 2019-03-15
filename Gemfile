@@ -60,6 +60,7 @@ end
 
 gem 'react-rails'
 gem 'axios_rails'
+gem "immutable-ruby"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

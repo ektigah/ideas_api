@@ -8,10 +8,11 @@ class IdeaForm extends React.Component {
     }
     this.handleInput = this.handleInput.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
-    this.updateIdea = this.updateIdea.bind(this)
+
   }
 
 handleInput(e){
+  this.props.resetNotification()
   this.setState({[e.target.name]: e.target.value})
 }
 
@@ -34,14 +35,6 @@ handleBlur() {
   .catch(error => console.log(error))
 }
   
-
-updateIdea(idea){
-  const ideaIndex = this.state.idea.findIndex(x => x.id === idea.id)
-  const ideas = update(this.state.ideas, {
-    [ideaIndex]: { $set: idea }
-  })
-  this.setState({ideas: ideas})
-}
   
   render() {
     return (
@@ -49,7 +42,7 @@ updateIdea(idea){
         <form onBlur={this.handleBlur}>
           <input className='input' type="text"
             name="title" placeholder='Enter a Title'
-            value={this.state.title} onChange={this.handleInput} />
+            value={this.state.title} onChange={this.handleInput} ref={this.props.titleRef}/>
           <textarea className='input' name="body"
             placeholder='Describe your idea'
             value={this.state.body} onChange={this.handleInput}>
