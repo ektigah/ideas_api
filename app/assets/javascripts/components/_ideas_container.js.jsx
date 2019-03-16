@@ -12,6 +12,9 @@ constructor(props) {
   this.updateIdea = this.updateIdea.bind(this)
   this.resetNotification = this.resetNotification.bind(this)
   this.enableEditing = this.enableEditing.bind(this)
+  this.deleteIdea = this.deleteIdea.bind(this)
+  this.submitDeleteIdea = this.submitDeleteIdea.bind(this)
+
 }  
  
   
@@ -60,15 +63,25 @@ addNewIdea() {
     () => { this.title.focus() })
 }
   
-  deleteIdea(id) {
-  axios.delete(`/api/v1/ideas/${id}`)
-  .then(response => {
-    const ideaIndex = this.state.ideas.findIndex(x => x.id === id)
-    const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]]})
-    this.setState({ideas: ideas})
-  })
-  .catch(error => console.log(error))
-}
+submitDeleteIdea(id){
+    fetch('/api/v1/ideas/'+ id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((response) => {
+            this.deleteIdea(id)
+          })
+      .catch(error => console.log(error));
+    }
+  
+  deleteIdea(id){
+        this.setState({
+          ideas: this.state.ideas.filter((f) => f.id !== id),
+          notification: "Idea removed"
+        })
+      }
+
   
 render(){
 
@@ -79,7 +92,7 @@ render(){
   } 
     else 
   {
-    return (<Idea idea={idea} key={idea.id} onClick={this.enableEditing} onDelete={this.deleteIdea} />)
+    return (<Idea idea={idea} key={idea.id} onClick={this.enableEditing} onDelete={this.submitDeleteIdea} />)
   }
     
   })

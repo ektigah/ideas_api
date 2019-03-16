@@ -17,24 +17,19 @@ handleInput(e){
 }
 
   
-handleBlur() {
-  const idea = {
-    title: this.state.title,
-    body: this.state.body
-  }
-
-  axios.put(
-    `/api/v1/ideas/${this.props.idea.id}`,
-    {
-      idea: idea
-    })
-  .then(response => {
-    console.log(response)
-    this.props.updateIdea(response.data)
-  })
-  .catch(error => console.log(error))
+handleBlur(){
+  let body = JSON.stringify({idea: {title: this.state.title, body: this.state.body} })
+fetch('/api/v1/ideas/'+ this.props.idea.id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: body,
+  }).then((response) => {
+        this.props.updateIdea(response.data)
+      })
+  .catch(error => console.log(error));
 }
-  
   
   render() {
     return (
