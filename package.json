@@ -2,7 +2,7 @@
   "name": "ideaboard-api",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "axios-on-rails": "0.0.1",
     "immutability-helper": "^3.0.0"
   }
